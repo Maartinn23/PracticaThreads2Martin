@@ -23,15 +23,15 @@ public class Copiador implements Runnable {
     }
 
     @Override
-    public void run() throws UnsupportedOperationException {
+    public void run() throws UnsupportedOperationException {    
         try {
-            File directoriDesti = new File(rutaDesti);
+            File directoriDesti = new File(rutaDesti);  // Declarem la ubicació desti de les copies
             if (!directoriDesti.exists()) {
                 directoriDesti.mkdir();
             }
 
             File fitxerDesti = new File(directoriDesti, fitxer.getName());
-            Files.copy(fitxer.toPath(), fitxerDesti.toPath());
+            Files.copy(fitxer.toPath(), fitxerDesti.toPath()); // Copiem els fitxers a la ubicació desí
             System.out.println("Fitxer copiat a " + rutaDesti);
         } catch (IOException e) {
             e.getMessage();

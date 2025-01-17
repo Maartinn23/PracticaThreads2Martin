@@ -8,6 +8,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>17</maven.compiler.release>
-        <exec.mainClass>practiques.practicathreads2martin.PracticaThreads2Martin</exec.mainClass>
+        <exec.mainClass>practiques.classes.Main</exec.mainClass>
     </properties>
 </project>

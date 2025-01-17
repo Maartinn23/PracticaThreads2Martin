@@ -8,16 +8,21 @@ package practiques.classes;
  *
  * @author alumnegs
  */
-public class Main 
-{
-    public static void main(String [] args){
+public class Main // clase main on instanciem les clases i els fils.
+{   
+    public static void main(String [] args){    
         System.out.println("Iniciant programa...");
+        
+
         String rutaDirectori = "directoriObservat";
         Publicador publicador = new Publicador();
         Observador observador = new Observador(rutaDirectori, publicador);
         
         
+        Thread filPublicador = new Thread(publicador);
         Thread filObservador = new Thread(observador);
+        
+        filPublicador.start();
         filObservador.start();
     }
 }

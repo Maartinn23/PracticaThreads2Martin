@@ -1,21 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package practiques.classes;
 
 import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-/**
- *
- * @author alumnegs
- */
 public class Observador implements Runnable {
 
-    private File directori;
-    private Publicador publicador;
+    private final File directori;
+    private final Publicador publicador;
 
     public Observador(String ruta, Publicador publicador) {
         this.directori = new File(ruta);
@@ -23,21 +13,26 @@ public class Observador implements Runnable {
     }
 
     @Override
-    public void run() throws UnsupportedOperationException {
+    public void run() { // Creem el mecanisme infinit de control de fitxers per directoriObservat
         while (true) {
             File[] fitxers = directori.listFiles();
             if (fitxers != null && fitxers.length > 0) {
-                synchronized (publicador) {
-                    publicador.notificar(fitxers[0]);
-                    try {
-                        publicador.wait();
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-
+                for (File fitxer : fitxers) {
+                    synchronized (publicador) {
+                        publicador.notificar(fitxer);   // notifiquem a publicador del fitxer trobat
+                        try {
+                            publicador.wait();  // Adormim el fil publicador
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                        }
                     }
                 }
             }
+            try {
+                Thread.sleep(1000); // pausa per evitar problemes derivats de rendiment pels fils
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
         }
     }
-
 }
